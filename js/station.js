@@ -4,7 +4,7 @@ class Station {
         this.address = address;
         this.position = position;
         this.availableBikeStands = availableBikeStands;
-        this.availableBike = availableBikes;
+        this.availableBikes = availableBikes;
         this.status = status;
         this.lastUpdate = lastUpdate;
         this.stations;
@@ -14,42 +14,35 @@ class Station {
         console.log(`La station ${this.name} a le statut ${this.status}`)
     }
 
-    defineIcon() {
-        let stationIcone;
-        let veloPercent = (this.availableBikeStands / (this.availableBike + this.availableBikeStands)) * 100;
+    defineMarker() {
+        let configMarker = {
+            title: "",
+            icon: ""
+        };
+        let veloPercent = (this.availableBikeStands / (this.availableBikes + this.availableBikeStands)) * 100;
         if (this.status === "OPEN") {
             // Affectation d'une icone en fonction du pourcentage de vélos restants
             if (veloPercent === 100) {
-                stationIcone = "img/station_ico_100.png";
+                configMarker.icon = "img/station_ico_100.png";
             } else if (veloPercent < 100 && veloPercent >= 75) {
-                stationIcone = "img/station_ico_75.png";
+                configMarker.icon = "img/station_ico_75.png";
             } else if (veloPercent < 75 && veloPercent >= 50) {
-                stationIcone = "img/station_ico_50.png";
+                configMarker.icon = "img/station_ico_50.png";
             } else if (veloPercent < 50 && veloPercent >= 25) {
-                stationIcone = "img/station_ico_25.png";
+                configMarker.icon = "img/station_ico_25.png";
             } else if (veloPercent < 25 && veloPercent >= 0) {
-                stationIcone = "img/station_ico_0.png";
+                configMarker.icon = "img/station_ico_0.png";
             }
+            //Affecte au Marker le nom de la station sans "number- "
+            configMarker.title = this.name.slice(4);
 
         } else {
-
-            stationIcone = "img/station_ico_closed.png";
+            // Affecte un nom et une icone spécifique si station close
+            configMarg.icon = "img/station_ico_closed.png";
+            configMarker.title = "Cette station est fermée";
         }
 
-        return stationIcone;
+        return configMarker;
     }
 
-    // createMarker() {
-    //     console.log(this.position);
-    //     let marker = new google.maps.Marker({
-    //         position: this.position,
-    //         title: this.name.slice(4),
-    //         icon: this.defineIcon()
-    //     });
-    //     markers.push(marker);
-    //     console.log(markers);
-    // }
-
-
 }
-

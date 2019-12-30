@@ -102,3 +102,8 @@ class Diaporama {
         this.start();
     }
 }
+
+window.diaporama = new Diaporama(CONFIG.slides,5000,CONFIG.sliderIds);
+
+diaporama.createSlide();
+diaporama.start();

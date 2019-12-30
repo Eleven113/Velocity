@@ -82,10 +82,10 @@
 //}
 
 // Création du 1er slide et mise en route du diapo
-window.diaporama = new Diaporama(CONFIG.slides,5000,CONFIG.sliderIds);
+// window.diaporama = new Diaporama(CONFIG.slides,5000,CONFIG.sliderIds);
 
-diaporama.createSlide();
-diaporama.start();
+// diaporama.createSlide();
+// diaporama.start();
 
 
 //// Gestion des events Slide suivant et précédént

@@ -39,6 +39,8 @@ const CONFIG = {
         btnLeft : "slider_btn-left",
         btnRight : "slider_btn-right",
         btnPause : "slider_btn-pause"
-    }
+    },
+    
+    reservationTime : 15
  
 }
