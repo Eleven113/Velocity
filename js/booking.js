@@ -27,9 +27,9 @@ class Booking {
 
     }
 
-    showRemainingTime(that) {
+    showRemainingTime() {
         let currentTime = Date.now();
-        let remainingTime = Math.round(that.duration - (currentTime/1000 - that.setTime/1000));
+        let remainingTime = Math.round(this.duration - (currentTime/1000 - this.setTime/1000));
         console.log(remainingTime);
         let divTimer = document.getElementById("timer");
         if (remainingTime > 0) {
@@ -49,10 +49,10 @@ class Booking {
     }
 
     timer() {
-        booking.showRemainingTime(booking);
+        this.showRemainingTime(this);
         timerSet = setInterval(function(that) {
-            booking.showRemainingTime(that)
-        }, 1000, booking);
+            that.showRemainingTime()
+        }, 1000, this);
     }
 
 }
