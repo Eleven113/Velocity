@@ -50,7 +50,7 @@ class Diaporama {
 
     nextSlide() {
         let that = this;
-        if (that.currentPosition === that.slides.length - 1) {
+        if (that.currentPosition === this.slides.length - 1) {
             that.currentPosition = 0;
         } else {
             that.currentPosition++;
