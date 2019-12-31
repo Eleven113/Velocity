@@ -6,21 +6,21 @@ class Diaporama {
         this.isRunning = true;
         this.currentPosition = 0;
         this.timer = function(){};
-        let that = this; 
+        let that = this;
 
         document.getElementById(this.sliderIds.btnLeft).addEventListener("click", function () {
-            that.prevSlide(); 
+            that.prevSlide();
             that.runDiapo();
         });
 
         document.getElementById(this.sliderIds.btnRight).addEventListener("click", function () {
-            that.nextSlide(); 
+            that.nextSlide(that); 
             that.runDiapo();
         });
 
         document.addEventListener("keyup", function (e) {
             if (e.keyCode === 39) {
-                that.nextSlide();
+                that.nextSlide(that);
                 that.runDiapo();
 
             }
@@ -49,8 +49,7 @@ class Diaporama {
         })
     }
 
-    nextSlide() {
-        let that = this;
+    nextSlide(that) {
         console.log(that);
         if (that.currentPosition === that.slides.length - 1) {
             that.currentPosition = 0;
