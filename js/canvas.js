@@ -4,7 +4,7 @@ class Canvas {
         this.context = context;
         this.ctx = this.div.getContext(this.context);
     }
-
+    // Créé le fond du canvas
     initCanvas(){
         this.ctx.font = "25px Serif";
         this.ctx.fillStyle = "#4f77f0";
@@ -19,8 +19,7 @@ class Canvas {
 
     // Efface le canvas
     clearDraw() {
-        console.log(this);
-        this.ctx.clearRect(0, 0, this.div.width, this.div.height);
+         this.ctx.clearRect(0, 0, this.div.width, this.div.height);
     }
     
 }
@@ -29,25 +28,14 @@ let reservationButton = document.getElementById("reservation_button");
 let validButton = document.getElementById("valid_button")
 let divStation = document.getElementById("station");
 let reservationCanvas = document.getElementById("reservation_canvas");
-
+let clearButton = document.getElementById("clear_button");
 let posCursorX, posCursorY;
 let isDrawing = false;
 let firstDraw = true;
 
 // Ajouter à la CONFIG
-let canvas = new Canvas(document.getElementById("canvas"),"2d");
+let canvas = new Canvas(document.getElementById(CONFIG.canvas.div),CONFIG.canvas.context);
 canvas.initCanvas();
-
-let clearButton = document.getElementById("clear_button");
-
-// function initCanvas() {
-//     console.log(this);
-//     ctx.font = "25px Serif";
-//     ctx.fillStyle = "#4f77f0";
-//     ctx.fillText("Signez puis valider votre réservation", 15, 200);
-// }
-
-// initCanvas();
 
 //le canvas apparait lorsqu'on clique sur réserver
 reservationButton.addEventListener("click", function () {
@@ -61,12 +49,11 @@ reservationButton.addEventListener("click", function () {
     }
 });
 
-
+// Logique de fonctionnement du dessin dans le canvas
 canvas.div.addEventListener("mousedown", function () {
-    console.log("mousedown");
     canvas.div.onmousemove = function (e) {
-        console.log(this);
-        posCursorX = e.clientX - canvasCoord.left - ((canvas.width) * 0.1);
+        console.log("onmousemove", this);
+        posCursorX = e.clientX - canvasCoord.left - ((canvas.div.width) * 0.1);
         posCursorY = e.clientY - canvasCoord.top;
         // le 1er dessin efface le texte
         if (firstDraw) {
@@ -75,20 +62,19 @@ canvas.div.addEventListener("mousedown", function () {
         }
         // Au 1er clic, on commence le dessin et positionne le curseur
         if (!isDrawing) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(posCursorX, posCursorY);
+            canvas.ctx.beginPath();
+            canvas.ctx.moveTo(posCursorX, posCursorY);
             isDrawing = true;
         }
         // Ensuite on dessine 
         else {
-            this.ctx.lineTo(posCursorX, posCursorY);
-            this.ctx.strokeStyle = "#4f77f0";
-            this.ctx.lineWidth = 5;
-            this.ctx.stroke();
+            canvas.ctx.lineTo(posCursorX, posCursorY);
+            canvas.ctx.strokeStyle = "#4f77f0";
+            canvas.ctx.lineWidth = 5;
+            canvas.ctx.stroke();
         }
     };
 });
-
 
 canvas.div.addEventListener("mouseup", canvas.stopDraw);
 

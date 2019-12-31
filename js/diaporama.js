@@ -1,10 +1,10 @@
 class Diaporama {
     constructor(slides, duration, sliderIds) {
         this.slides = slides;
-        this.isRunning = true;
-        this.currentPosition = 0;
         this.duration = duration;
         this.sliderIds = sliderIds;
+        this.isRunning = true;
+        this.currentPosition = 0;
         this.timer = function(){};
         let that = this; 
 
@@ -20,37 +20,39 @@ class Diaporama {
 
         document.addEventListener("keyup", function (e) {
             if (e.keyCode === 39) {
-                this.nextSlide();
-                this.runDiapo();
+                that.nextSlide();
+                that.runDiapo();
 
             }
 
             if (e.keyCode === 37) {
-                this.prevSlide();
-                this.runDiapo();
+                that.prevSlide();
+                that.runDiapo();
             }
         });
         
         let sliderBtnPause = document.getElementById(this.sliderIds.btnPause);
         sliderBtnPause.addEventListener("click", function () {
-            if (that.diapoRun === true) {
-                this.pause();
-                this.isRunning = false;
+            if (that.isRunning === true) {
+                that.pause();
+                that.isRunning = false;
                 sliderBtnPause.style.color = "#e31b1b";
                 sliderBtnPause.innerHTML = '<i class="fas fa-play"></i>';
-            } else {
-                this.pause();
-                this.start();
-                this.isRunning = true;
+            } else {           
+                that.pause();
+                that.start();
+                that.isRunning = true;
                 sliderBtnPause.style.color = "#4f77f0";
                 sliderBtnPause.innerHTML = '<i class="fas fa-pause"></i>';
+
             }
         })
     }
 
     nextSlide() {
         let that = this;
-        if (that.currentPosition === this.slides.length - 1) {
+        console.log(that);
+        if (that.currentPosition === that.slides.length - 1) {
             that.currentPosition = 0;
         } else {
             that.currentPosition++;

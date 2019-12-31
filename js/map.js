@@ -22,8 +22,6 @@ function initMap() {
     let stations = [];
     let markers = [];
     let marker;
-    let stationTitle;
-    let stationIcon;
 
     // Appel à l'API Station, Construction et logique lié à la carte
     ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=Amiens&apiKey=81391ed9adfd937442c39a2490a0afa6d51d29e9", function (reponse) {

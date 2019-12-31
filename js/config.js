@@ -41,6 +41,11 @@ const CONFIG = {
         btnPause : "slider_btn-pause"
     },
     
-    reservationTime : 30
+    reservationTime : 30,
+
+    canvas : {
+        div : "canvas",
+        context : "2d"
+    }
  
 }
