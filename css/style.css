@@ -218,6 +218,8 @@ i:hover {
     border-radius: 10%;
     padding: 3%;
     margin-top: 4%;
+    width: 19%;
+    text-align: center;
 }
 
 #slider_diapo {

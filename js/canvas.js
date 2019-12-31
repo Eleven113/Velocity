@@ -52,7 +52,6 @@ reservationButton.addEventListener("click", function () {
 // Logique de fonctionnement du dessin dans le canvas
 canvas.div.addEventListener("mousedown", function () {
     canvas.div.onmousemove = function (e) {
-        console.log("onmousemove", this);
         posCursorX = e.clientX - canvasCoord.left - ((canvas.div.width) * 0.1);
         posCursorY = e.clientY - canvasCoord.top;
         // le 1er dessin efface le texte
