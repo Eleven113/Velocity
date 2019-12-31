@@ -41,6 +41,6 @@ const CONFIG = {
         btnPause : "slider_btn-pause"
     },
     
-    reservationTime : 15
+    reservationTime : 30
  
 }

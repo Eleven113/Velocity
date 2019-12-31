@@ -1,7 +1,53 @@
+class Canvas {
+    constructor(div,context){
+        this.div = div;
+        this.context = context;
+        this.ctx = this.div.getContext(this.context);
+    }
+
+    initCanvas(){
+        this.ctx.font = "25px Serif";
+        this.ctx.fillStyle = "#4f77f0";
+        this.ctx.fillText("Signez puis valider votre réservation", 15, 200);
+    }
+
+    // Arrete le dessin
+    stopDraw() {
+        this.onmousemove = null;
+        isDrawing = false;
+    }
+
+    // Efface le canvas
+    clearDraw() {
+        console.log(this);
+        this.ctx.clearRect(0, 0, this.div.width, this.div.height);
+    }
+    
+}
+
 let reservationButton = document.getElementById("reservation_button");
 let validButton = document.getElementById("valid_button")
 let divStation = document.getElementById("station");
 let reservationCanvas = document.getElementById("reservation_canvas");
+
+let posCursorX, posCursorY;
+let isDrawing = false;
+let firstDraw = true;
+
+// Ajouter à la CONFIG
+let canvas = new Canvas(document.getElementById("canvas"),"2d");
+canvas.initCanvas();
+
+let clearButton = document.getElementById("clear_button");
+
+// function initCanvas() {
+//     console.log(this);
+//     ctx.font = "25px Serif";
+//     ctx.fillStyle = "#4f77f0";
+//     ctx.fillText("Signez puis valider votre réservation", 15, 200);
+// }
+
+// initCanvas();
 
 //le canvas apparait lorsqu'on clique sur réserver
 reservationButton.addEventListener("click", function () {
@@ -11,69 +57,42 @@ reservationButton.addEventListener("click", function () {
         divStation.style.display = "none";
         reservationCanvas.style.display = "flex";
         currentDisplayStationCanvas = "canvas";
-        return canvasCoord = canvas.getBoundingClientRect();
+        return canvasCoord = canvas.div.getBoundingClientRect();
     }
 });
 
 
-let posCursorX, posCursorY;
-let draw = false;
-let firstDraw = true;
-
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
-
-let clearButton = document.getElementById("clear_button");
-
-function initCanvas() {
-    ctx.font = "25px Serif";
-    ctx.fillStyle = "#4f77f0";
-    ctx.fillText("Signez puis valider votre réservation", 15, 200);
-}
-
-initCanvas();
-
-canvas.addEventListener("mousedown", function () {
-
-    canvas.onmousemove = function (e) {
-
+canvas.div.addEventListener("mousedown", function () {
+    console.log("mousedown");
+    canvas.div.onmousemove = function (e) {
+        console.log(this);
         posCursorX = e.clientX - canvasCoord.left - ((canvas.width) * 0.1);
         posCursorY = e.clientY - canvasCoord.top;
         // le 1er dessin efface le texte
         if (firstDraw) {
-            clearDraw();
+            canvas.clearDraw();
             firstDraw = false;
         }
         // Au 1er clic, on commence le dessin et positionne le curseur
-        if (!draw) {
-            ctx.beginPath();
-            ctx.moveTo(posCursorX, posCursorY);
-            draw = true;
+        if (!isDrawing) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(posCursorX, posCursorY);
+            isDrawing = true;
         }
         // Ensuite on dessine 
         else {
-            ctx.lineTo(posCursorX, posCursorY);
-            ctx.strokeStyle = "#4f77f0";
-            ctx.lineWidth = 5;
-            ctx.stroke();
+            this.ctx.lineTo(posCursorX, posCursorY);
+            this.ctx.strokeStyle = "#4f77f0";
+            this.ctx.lineWidth = 5;
+            this.ctx.stroke();
         }
     };
 });
 
 
-canvas.addEventListener("mouseup", stopDraw);
+canvas.div.addEventListener("mouseup", canvas.stopDraw);
 
-canvas.addEventListener("mouseleave", stopDraw);
+canvas.div.addEventListener("mouseleave", canvas.stopDraw);
 
-clearButton.addEventListener("click", clearDraw);
+clearButton.addEventListener("click", canvas.clearDraw);
 
-// Arrete le dessin
-function stopDraw() {
-    canvas.onmousemove = null;
-    draw = false;
-}
-
-// Efface le canvas
-function clearDraw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}

@@ -13,7 +13,7 @@ validButton.addEventListener("click", function () {
     let surnameValue = document.getElementById("surname").value;
     let nameValue = document.getElementById("name").value;
     let setTime = Date.now();
-    console.log(setTime);
+
     booking = new Booking(stationName, nameValue, surnameValue, setTime, CONFIG.reservationTime);
 
     // Enregistrement des données
@@ -42,8 +42,8 @@ validButton.addEventListener("click", function () {
 
     //Réinitialisation Canvas
     firstDraw = true;
-    clearDraw();
-    initCanvas();
+    canvas.clearDraw();
+    canvas.initCanvas();
 
     booking.timer();
 
