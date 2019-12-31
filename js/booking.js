@@ -17,6 +17,7 @@ class Booking {
             let identityStr = JSON.stringify(identityObj);
             sessionStorage.setItem("station", this.stationName);
             sessionStorage.setItem("setTime", this.setTime);
+            sessionStorage.setItem("identity", identityStr);
             localStorage.setItem("identity", identityStr);
         }
     }
@@ -30,7 +31,6 @@ class Booking {
     showRemainingTime() {
         let currentTime = Date.now();
         let remainingTime = Math.round(this.duration - (currentTime/1000 - this.setTime/1000));
-        console.log(remainingTime);
         let divTimer = document.getElementById("timer");
         if (remainingTime > 0) {
             let minutes, secondes;
@@ -44,12 +44,13 @@ class Booking {
             clearInterval(timerSet);
             reservationInfos.innerHTML = '';
             reservationInfos.style.display = "none";
+            sessionStorage.clear();
         }
 
     }
 
     timer() {
-        this.showRemainingTime(this);
+        this.showRemainingTime();
         timerSet = setInterval(function(that) {
             that.showRemainingTime()
         }, 1000, this);

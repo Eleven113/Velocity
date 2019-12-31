@@ -49,46 +49,22 @@ validButton.addEventListener("click", function () {
 
 });
 
-//Timer 
-// function timer() {
-//     booking.showRemainingTime(booking);
-//     timerSet = setInterval(function(that) {
-//         booking.showRemainingTime(that)
-//     }, 1000, booking);
-// }
-
-
-// function funcReservationInfos() {
-
-//     let divTimer = document.getElementById("timer");
-//     if (remainingTime > 0) {
-//         let minutes, secondes;
-//         minutes = Math.trunc(remainingTime / 60);
-//         minutes = ("0" + minutes).slice(-2);
-//         secondes = remainingTime % 60;
-//         secondes = ("0" + secondes).slice(-2);
-//         remainingTime--;
-//         divTimer.innerHTML = minutes + ':' + secondes;
-//         sessionStorage.setItem("temps", remainingTime);
-//     } else {
-//         clearInterval(timerSet);
-//         reservationInfos.innerHTML = '';
-//         reservationInfos.style.display = "none";
-//     }
-
-// }
 
 //Affichage infos réservation si réservation en cours
 window.addEventListener("load", function () {
-    console.log("load");
     let setTime = sessionStorage.getItem("setTime");
-    console.log(setTime);
-    // if (remainingTime > 0) {
-    //     stationName = sessionStorage.getItem("station");
-    //     sessionStorage.getItem("station");
-    //     CreateReservationInfos(stationName, identityJson.name, identityJson.surname);
-    //     timerSet = setInterval(funcReservationInfos, 1000);
-    //     funcReservationInfos();
+    let sessionIdentityStr = sessionStorage.getItem("identity");
+    let sessionIdentityObj = JSON.parse(sessionIdentityStr);
+    let remainingTime = Math.round(CONFIG.reservationTime - (Date.now() / 1000 - setTime / 1000));
 
-    // }
+    if (remainingTime > 0) {
+        stationName = sessionStorage.getItem("station");
+        booking = new Booking(stationName, sessionIdentityObj.name, sessionIdentityObj.surname, setTime, CONFIG.reservationTime);
+        booking.setBooking();
+        booking.showReservationInfos();
+        booking.timer();
+
+    } else {
+        sessionStorage.clear();
+    }
 });

@@ -40,7 +40,6 @@ function initMap() {
             center: CONFIG.map.center
         });
 
-        console.log(stations);
         markers = stations.map(function (station) {
 
             marker = new google.maps.Marker({
@@ -68,7 +67,6 @@ function initMap() {
                 let spanAddress = document.getElementById("station_address");
                 spanAddress.textContent = station.address;
                 let spanAvailableBikes = document.getElementById("station_available_bikes");
-                console.log(station.availableBikes);
                 spanAvailableBikes.textContent = station.availableBikes;
                 let spanAvailableStands = document.getElementById("station_available_stands");
                 spanAvailableStands.textContent = station.availableBikeStands;
