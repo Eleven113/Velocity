@@ -50,7 +50,6 @@ class Diaporama {
     }
 
     nextSlide(that) {
-        console.log(that);
         if (that.currentPosition === that.slides.length - 1) {
             that.currentPosition = 0;
         } else {
