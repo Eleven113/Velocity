@@ -7,44 +7,10 @@ class Diaporama {
         this.currentPosition = 0;
         this.timer;
 
-        document.getElementById(this.sliderIds.btnLeft).addEventListener("click", function () {
-            this.prevSlide();
-            this.runDiapo();
-        }.bind(this));
+        this.addevent();
 
-        document.getElementById(this.sliderIds.btnRight).addEventListener("click", function () {
-            this.nextSlide();
-            this.runDiapo();
-        }.bind(this));
-
-        document.addEventListener("keyup", function (e) {
-            if (e.keyCode === 39) {
-                this.nextSlide();
-                this.runDiapo();
-
-            }
-
-            if (e.keyCode === 37) {
-                that.prevSlide();
-                that.runDiapo();
-            }
-        }.bind(this));
-
-        let sliderBtnPause = document.getElementById(this.sliderIds.btnPause);
-        sliderBtnPause.addEventListener("click", function () {
-            if (this.isRunning === true) {
-                this.pause();
-                this.isRunning = false;
-                sliderBtnPause.style.color = "#e31b1b";
-                sliderBtnPause.innerHTML = '<i class="fas fa-play"></i>';
-            } else {
-                this.pause();
-                this.start();
-                this.isRunning = true;
-                sliderBtnPause.style.color = "#4f77f0";
-                sliderBtnPause.innerHTML = '<i class="fas fa-pause"></i>';
-            }
-        }.bind(this))
+        this.sliderBtnPause = document.getElementById(this.sliderIds.btnPause);
+        this.sliderBtnPause.addEventListener("click", this.pauseAndPlay.bind(this));
     }
 
     nextSlide() {
@@ -101,6 +67,47 @@ class Diaporama {
         this.pause();
         this.start();
     }
+
+    pauseAndPlay() {
+        if (this.isRunning === true) {
+            this.pause();
+            this.isRunning = false;
+            this.sliderBtnPause.style.color = "#e31b1b";
+            this.sliderBtnPause.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+            this.pause();
+            this.start();
+            this.isRunning = true;
+            this.sliderBtnPause.style.color = "#4f77f0";
+            this.sliderBtnPause.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+    }
+
+    addevent() {
+        document.getElementById(this.sliderIds.btnLeft).addEventListener("click", function () {
+            this.prevSlide();
+            this.runDiapo();
+        }.bind(this));
+
+        document.getElementById(this.sliderIds.btnRight).addEventListener("click", function () {
+            this.nextSlide();
+            this.runDiapo();
+        }.bind(this));
+
+        document.addEventListener("keyup", function (e) {
+            if (e.keyCode === 39) {
+                this.nextSlide();
+                this.runDiapo();
+
+            }
+
+            if (e.keyCode === 37) {
+                this.prevSlide();
+                this.runDiapo();
+            }
+        }.bind(this));
+    }
+
 }
 
 window.diaporama = new Diaporama(CONFIG.slides, 5000, CONFIG.sliderIds);
