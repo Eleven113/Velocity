@@ -5,23 +5,22 @@ class Diaporama {
         this.sliderIds = sliderIds;
         this.isRunning = true;
         this.currentPosition = 0;
-        this.timer = function(){};
-        let that = this;
+        this.timer;
 
         document.getElementById(this.sliderIds.btnLeft).addEventListener("click", function () {
-            that.prevSlide();
-            that.runDiapo();
-        });
+            this.prevSlide();
+            this.runDiapo();
+        }.bind(this));
 
         document.getElementById(this.sliderIds.btnRight).addEventListener("click", function () {
-            that.nextSlide(that); 
-            that.runDiapo();
-        });
+            this.nextSlide();
+            this.runDiapo();
+        }.bind(this));
 
         document.addEventListener("keyup", function (e) {
             if (e.keyCode === 39) {
-                that.nextSlide(that);
-                that.runDiapo();
+                this.nextSlide();
+                this.runDiapo();
 
             }
 
@@ -29,37 +28,36 @@ class Diaporama {
                 that.prevSlide();
                 that.runDiapo();
             }
-        });
-        
+        }.bind(this));
+
         let sliderBtnPause = document.getElementById(this.sliderIds.btnPause);
         sliderBtnPause.addEventListener("click", function () {
-            if (that.isRunning === true) {
-                that.pause();
-                that.isRunning = false;
+            if (this.isRunning === true) {
+                this.pause();
+                this.isRunning = false;
                 sliderBtnPause.style.color = "#e31b1b";
                 sliderBtnPause.innerHTML = '<i class="fas fa-play"></i>';
-            } else {           
-                that.pause();
-                that.start();
-                that.isRunning = true;
+            } else {
+                this.pause();
+                this.start();
+                this.isRunning = true;
                 sliderBtnPause.style.color = "#4f77f0";
                 sliderBtnPause.innerHTML = '<i class="fas fa-pause"></i>';
-
             }
-        })
+        }.bind(this))
     }
 
-    nextSlide(that) {
-        if (that.currentPosition === that.slides.length - 1) {
-            that.currentPosition = 0;
+    nextSlide() {
+        if (this.currentPosition === this.slides.length - 1) {
+            this.currentPosition = 0;
         } else {
-            that.currentPosition++;
+            this.currentPosition++;
         }
-        that.createSlide();
+        this.createSlide();
     }
 
     prevSlide() {
-                if (this.currentPosition === 0) {
+        if (this.currentPosition === 0) {
             this.currentPosition = this.slides.length - 1;
         } else {
             this.currentPosition--;
@@ -68,7 +66,7 @@ class Diaporama {
     }
 
     start() {
-        this.timer = setInterval(this.nextSlide, this.duration, this);
+        this.timer = setInterval(this.nextSlide.bind(this), this.duration);
     }
 
     pause() {
@@ -80,11 +78,13 @@ class Diaporama {
         let sliderTxt = document.getElementById(this.sliderIds.txt);
         sliderImg.innerHTML = '';
         sliderTxt.innerHTML = '';
+
         let img = document.createElement("img");
         img.src = this.slides[this.currentPosition].img;
         img.alt = this.slides[this.currentPosition].alt;
         img.id = this.sliderIds.img + "-img";
         sliderImg.append(img);
+
         let span = document.createElement("span");
         span.id = this.sliderIds.txt + "-span";
         span.textContent = (this.currentPosition + 1) + " - " + this.slides[this.currentPosition].txt;
@@ -103,7 +103,7 @@ class Diaporama {
     }
 }
 
-window.diaporama = new Diaporama(CONFIG.slides,5000,CONFIG.sliderIds);
+window.diaporama = new Diaporama(CONFIG.slides, 5000, CONFIG.sliderIds);
 
 diaporama.createSlide();
 diaporama.start();
