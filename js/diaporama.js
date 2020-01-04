@@ -110,7 +110,7 @@ class Diaporama {
 
 }
 
-window.diaporama = new Diaporama(CONFIG.slides, 5000, CONFIG.sliderIds);
+diaporama = new Diaporama(CONFIG.slider.slides, CONFIG.slider.timing, CONFIG.slider.divIds);
 
 diaporama.createSlide();
 diaporama.start();

@@ -8,6 +8,7 @@ class Canvas {
         this.posCursorY;
         this.isDrawing = false;
         this.firstDraw = true;
+        this.draw(this.ctx);
     }
     // Créé le fond du canvas
     initCanvas() {
@@ -27,7 +28,7 @@ class Canvas {
         this.ctx.clearRect(0, 0, this.div.width, this.div.height);
     }
 
-    draw() {
+    draw(ctx) {
         this.div.addEventListener("mousedown", function () {
             this.div.onmousemove = function (e) {
                 this.posCursorX = e.clientX - this.canvasCoord.left - ((this.div.width) * 0.1);
@@ -41,18 +42,18 @@ class Canvas {
                 // Au 1er clic, on commence le dessin et positionne le curseur
                 if (!this.isDrawing) {
                     console.log(this.ctx);
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(this.posCursorX, this.posCursorY);
+                    ctx.beginPath();
+                    ctx.moveTo(this.posCursorX, this.posCursorY);
                     console.log(this.posCursorX,this.posCursorY);
                     this.isDrawing = true;
                 }
                 // Ensuite on dessine 
                 else {
                     console.log(this.posCursorX,this.posCursorY);
-                    this.ctx.lineTo(this.posCursorX, this.posCursorY);
-                    this.ctx.strokeStyle = "#4f77f0";
-                    this.ctx.lineWidth = 5;
-                    this.ctx.stroke();
+                    ctx.lineTo(this.posCursorX, this.posCursorY);
+                    ctx.strokeStyle = "#4f77f0";
+                    ctx.lineWidth = 5;
+                    ctx.stroke();
                 }
             }.bind(this);
         }.bind(this));
@@ -70,7 +71,7 @@ let clearButton = document.getElementById("clear_button");
 // Ajouter à la CONFIG
 let canvas = new Canvas(document.getElementById(CONFIG.canvas.div), CONFIG.canvas.context);
 canvas.initCanvas();
-canvas.draw();
+// canvas.draw();
 
 //le canvas apparait lorsqu'on clique sur réserver
 reservationButton.addEventListener("click", function () {

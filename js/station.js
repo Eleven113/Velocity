@@ -10,10 +10,6 @@ class Station {
         this.stations;
     }
 
-    debugStation() {
-        console.log(`La station ${this.name} a le statut ${this.status}`)
-    }
-
     defineMarker() {
         let configMarker = {
             title: "",
