@@ -5,6 +5,9 @@ class Booking {
         this.surname = surname;
         this.setTime = setTime;
         this.duration = duration;
+        this.countdown;
+
+        this.reservationInfos = document.getElementById("reservation_infos");
     }
 
     setBooking() {
@@ -23,9 +26,8 @@ class Booking {
     }
 
     showReservationInfos() {
-        reservationInfos.style.display = "flex";
-        reservationInfos.innerHTML = '<div>Vélo reservé à la station <span class="reservation_data">' + this.stationName + '</span> par <span class="reservation_data">' + this.name + ' ' + this.surname + '</span></div><br><div>Temps restant : <span id="timer" class="reservation_data"></span></div>';
-
+        this.reservationInfos.style.display = "flex";
+        this.reservationInfos.innerHTML = '<div>Vélo reservé à la station <span class="reservation_data">' + this.stationName + '</span> par <span class="reservation_data">' + this.name + ' ' + this.surname + '</span></div><br><div>Temps restant : <span id="timer" class="reservation_data"></span></div>';
     }
 
     showRemainingTime() {
@@ -41,9 +43,9 @@ class Booking {
             divTimer.innerHTML = minutes + ':' + secondes;
             sessionStorage.setItem("temps", remainingTime);
         } else {
-            clearInterval(timerSet);
-            reservationInfos.innerHTML = '';
-            reservationInfos.style.display = "none";
+            clearInterval(this.countdown);
+            this.reservationInfos.innerHTML = '';
+            this.reservationInfos.style.display = "none";
             sessionStorage.clear();
         }
 
@@ -51,9 +53,8 @@ class Booking {
 
     timer() {
         this.showRemainingTime();
-        timerSet = setInterval(function(that) {
-            that.showRemainingTime()
-        }, 1000, this);
+        this.countdown = setInterval(this.showRemainingTime.bind(this)
+        , 1000);
     }
 
 }

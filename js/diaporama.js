@@ -6,11 +6,10 @@ class Diaporama {
         this.isRunning = true;
         this.currentPosition = 0;
         this.timer;
-
-        this.addevent();
-
         this.sliderBtnPause = document.getElementById(this.sliderIds.btnPause);
-        this.sliderBtnPause.addEventListener("click", this.pauseAndPlay.bind(this));
+
+        this.addEvent();
+
     }
 
     nextSlide() {
@@ -68,6 +67,17 @@ class Diaporama {
         this.start();
     }
 
+    addEvent() {
+        document.getElementById(this.sliderIds.btnLeft).addEventListener("click", this.eventLeftBtn.bind(this));
+
+        document.getElementById(this.sliderIds.btnRight).addEventListener("click", this.eventRightBtn.bind(this));
+
+        document.addEventListener("keyup", this.eventKeys.bind(this));
+
+
+        this.sliderBtnPause.addEventListener("click", this.pauseAndPlay.bind(this));
+    }
+
     pauseAndPlay() {
         if (this.isRunning === true) {
             this.pause();
@@ -83,29 +93,28 @@ class Diaporama {
         }
     }
 
-    addevent() {
-        document.getElementById(this.sliderIds.btnLeft).addEventListener("click", function () {
-            this.prevSlide();
-            this.runDiapo();
-        }.bind(this));
 
-        document.getElementById(this.sliderIds.btnRight).addEventListener("click", function () {
+    eventLeftBtn() {
+        this.prevSlide();
+        this.runDiapo();
+    }
+
+    eventRightBtn() {
+        this.nextSlide();
+        this.runDiapo();
+    }
+
+    eventKeys(e) {
+        if (e.keyCode === 39) {
             this.nextSlide();
             this.runDiapo();
-        }.bind(this));
 
-        document.addEventListener("keyup", function (e) {
-            if (e.keyCode === 39) {
-                this.nextSlide();
-                this.runDiapo();
+        }
 
-            }
-
-            if (e.keyCode === 37) {
-                this.prevSlide();
-                this.runDiapo();
-            }
-        }.bind(this));
+        if (e.keyCode === 37) {
+            this.prevSlide();
+            this.runDiapo();
+        }
     }
 
 }

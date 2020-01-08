@@ -8,8 +8,33 @@ class Canvas {
         this.posCursorY;
         this.isDrawing = false;
         this.firstDraw = true;
-        this.draw(this.ctx);
+        this.draw();
+
+        this.reservationButton = document.getElementById("reservation_button");
+        this.validButton = document.getElementById("valid_button")
+        this.divStation = document.getElementById("station");
+        this.reservationInfos = document.getElementById("reservation_infos");
+        this.divReservationCanvas = document.getElementById("reservation_canvas");
+        this.divStationCanvas = document.getElementById("station_canvas");
+        this.clearButton = document.getElementById("clear_button");
+        this.divName = document.getElementById("name");
+        this.divSurname = document.getElementById("surname");
+        this.validButton = document.getElementById("valid_button");
+        this.divMap = document.getElementById("map");
+
+        //le canvas apparait lorsqu'on clique sur réserver
+        this.reservationButton.addEventListener("click", this.showCanvas.bind(this));
+
+        //Réservation
+        this.validButton.addEventListener("click", this.booking.bind(this));
+
+        this.clearButton.addEventListener("click", this.clearDraw.bind(this));
+
+        this.div.addEventListener("mouseup", this.stopDraw.bind(this));
+
+        this.div.addEventListener("mouseleave", this.stopDraw.bind(this));
     }
+
     // Créé le fond du canvas
     initCanvas() {
         this.ctx.font = "25px Serif";
@@ -17,9 +42,21 @@ class Canvas {
         this.ctx.fillText("Signez puis valider votre réservation", 15, 200);
     }
 
+    showCanvas() {
+        if (this.divName.value === '' || this.divSurname.value === '') {
+            alert("Veuillez entrer un nom et un prénom");
+        } else {
+            this.divStation.style.display = "none";
+            this.divReservationCanvas.style.display = "flex";
+            currentDisplayStationCanvas = "canvas";
+            return this.canvasCoord = this.div.getBoundingClientRect();
+        }
+    }
+
     // Arrete le dessin
     stopDraw() {
-        this.onmousemove = null;
+        console.log(this);
+        this.div.onmousemove = null;
         this.isDrawing = false;
     }
 
@@ -28,12 +65,12 @@ class Canvas {
         this.ctx.clearRect(0, 0, this.div.width, this.div.height);
     }
 
-    draw(ctx) {
+    draw() {
         this.div.addEventListener("mousedown", function () {
             this.div.onmousemove = function (e) {
-                this.posCursorX = e.clientX - this.canvasCoord.left - ((this.div.width) * 0.1);
+                this.posCursorX = e.clientX - this.canvasCoord.left;
                 this.posCursorY = e.clientY - this.canvasCoord.top;
-                
+
                 // le 1er dessin efface le texte
                 if (this.firstDraw) {
                     this.clearDraw();
@@ -42,77 +79,71 @@ class Canvas {
                 // Au 1er clic, on commence le dessin et positionne le curseur
                 if (!this.isDrawing) {
                     console.log(this.ctx);
-                    ctx.beginPath();
-                    ctx.moveTo(this.posCursorX, this.posCursorY);
-                    console.log(this.posCursorX,this.posCursorY);
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.posCursorX, this.posCursorY);
+                    console.log(this.posCursorX, this.posCursorY);
                     this.isDrawing = true;
                 }
                 // Ensuite on dessine 
                 else {
-                    console.log(this.posCursorX,this.posCursorY);
-                    ctx.lineTo(this.posCursorX, this.posCursorY);
-                    ctx.strokeStyle = "#4f77f0";
-                    ctx.lineWidth = 5;
-                    ctx.stroke();
+                    console.log(this.posCursorX, this.posCursorY);
+                    this.ctx.lineTo(this.posCursorX, this.posCursorY);
+                    this.ctx.strokeStyle = "#4f77f0";
+                    this.ctx.lineWidth = 5;
+                    this.ctx.stroke();
                 }
             }.bind(this);
         }.bind(this));
 
     }
+
+    booking() {
+        let stationName = document.getElementById("station_name").textContent;
+        let surnameValue = this.divSurname.value;
+        let nameValue = this.divName.value;
+        let setTime = Date.now();
+
+        booking = new Booking(stationName, nameValue, surnameValue, setTime, CONFIG.reservationTime);
+
+        // Enregistrement des données
+        booking.setBooking();
+
+        // Réinitialisation de la précédente réservation
+        clearInterval(timerSet);
+        this.reservationInfos.innerHTML = '';
+        this.reservationInfos.style.display = "none";
+
+
+        // Affichage de la réservation
+        booking.showReservationInfos();
+
+        // Modification affichage div station_canvas
+        currentDisplayStationCanvas = "station";
+        this.divStationCanvas.style.display = "none";
+        this.divStation.style.display = "block";
+        this.divReservationCanvas.style.display = "none";
+
+        if (screen.width > 414) {
+            this.divMap.style.width = "100%";
+        } else {
+            this.divMapstation.style.flexDirection = "column";
+        }
+
+        //Réinitialisation Canvas
+        this.firstDraw = true;
+        this.clearDraw();
+        this.initCanvas();
+
+        booking.timer();
+
+    }
 }
 
-let reservationButton = document.getElementById("reservation_button");
-let validButton = document.getElementById("valid_button")
-let divStation = document.getElementById("station");
-let reservationCanvas = document.getElementById("reservation_canvas");
-let clearButton = document.getElementById("clear_button");
 
 
 // Ajouter à la CONFIG
 let canvas = new Canvas(document.getElementById(CONFIG.canvas.div), CONFIG.canvas.context);
 canvas.initCanvas();
-// canvas.draw();
+canvas.draw();
 
-//le canvas apparait lorsqu'on clique sur réserver
-reservationButton.addEventListener("click", function () {
-    if (document.getElementById("name").value === '' || document.getElementById("surname").value === '') {
-        alert("Veuillez entrer un nom et un prénom");
-    } else {
-        divStation.style.display = "none";
-        reservationCanvas.style.display = "flex";
-        currentDisplayStationCanvas = "canvas";
-        return canvasCoord = canvas.div.getBoundingClientRect();
-    }
-});
 
-// // Logique de fonctionnement du dessin dans le canvas
-// canvas.div.addEventListener("mousedown", function () {
-//     canvas.div.onmousemove = function (e) {
-//         posCursorX = e.clientX - canvasCoord.left - ((canvas.div.width) * 0.1);
-//         posCursorY = e.clientY - canvasCoord.top;
-//         // le 1er dessin efface le texte
-//         if (firstDraw) {
-//             canvas.clearDraw();
-//             firstDraw = false;
-//         }
-//         // Au 1er clic, on commence le dessin et positionne le curseur
-//         if (!isDrawing) {
-//             canvas.ctx.beginPath();
-//             canvas.ctx.moveTo(posCursorX, posCursorY);
-//             isDrawing = true;
-//         }
-//         // Ensuite on dessine 
-//         else {
-//             canvas.ctx.lineTo(posCursorX, posCursorY);
-//             canvas.ctx.strokeStyle = "#4f77f0";
-//             canvas.ctx.lineWidth = 5;
-//             canvas.ctx.stroke();
-//         }
-//     };
-// });
-
-canvas.div.addEventListener("mouseup", canvas.stopDraw);
-
-canvas.div.addEventListener("mouseleave", canvas.stopDraw);
-
-clearButton.addEventListener("click", canvas.clearDraw);

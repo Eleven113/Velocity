@@ -6,8 +6,9 @@ class MapManager {
         this.map;
         this.divMap = document.getElementById("map");
         this.divStationCanvas = document.getElementById("station_canvas");
-        this.currentDisplayStationCanvas = "";
         this.divMapstation = document.getElementById("mapstation");
+        this.divStation = document.getElementById("station");
+        this.divReservationCanvas = document.getElementById("reservation_canvas");
         this.stations = [];
         this.markers;
         this.marker;
@@ -15,19 +16,11 @@ class MapManager {
         this.listeStations;
         this.stationClose = document.getElementById("station_close");
 
-        this.stationClose.addEventListener("click", function () {
-            
-            if (this.currentDisplayStationCanvas === "station") {
-                this.divStationCanvas.style.display = "none";
-                this.divMap.style.width = "100%";
-            }
-        
-            if (this.currentDisplayStationCanvas === "canvas") {
-                this.divStation.style.display = "block";
-                this.reservationCanvas.style.display = "none";
-                this.currentDisplayStationCanvas = "station";
-            }
-        }.bind(this));
+        // Logique de fermeture de la div station_canvas
+        this.stationClose.addEventListener("click", this.closingDivStationcanvas.bind(this));
+
+        // Affichage la réservation en cours au refresh
+        window.addEventListener("load", this.showCurrentReservation);
 
     }
 
@@ -71,16 +64,18 @@ class MapManager {
 
     createMarkers() {
         this.markers = this.stations.map(function (station) {
-            
+
             this.marker = new google.maps.Marker({
                 position: station.position,
                 icon: station.defineMarker().icon,
                 title: station.defineMarker().title,
                 map: this.map
             });
-  
+
             // Création de la div station_canvas lors du clic sur le marqueur
-            google.maps.event.addListener(this.marker, 'click', function() { this.createDivStation.bind(this)(station) }.bind(this));
+            google.maps.event.addListener(this.marker, 'click', function () {
+                this.createDivStation.bind(this)(station)
+            }.bind(this));
 
             return this.marker;
         }.bind(this));
@@ -91,12 +86,11 @@ class MapManager {
             imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
         });
     }
-    
+
     createDivStation(station) {
 
         //Affichage différent si écran mobile ou si écran desktop/tablette
-        this.currentDisplayStationCanvas = "station";
-        console.log(this.currentDisplayStationCanvas);
+        currentDisplayStationCanvas = "station";
         this.divStationCanvas.style.display = "block";
 
         if (screen.width > 414) {
@@ -140,4 +134,34 @@ class MapManager {
 
     }
 
+    closingDivStationcanvas() {
+        if (currentDisplayStationCanvas === "station") {
+            this.divStationCanvas.style.display = "none";
+            this.divMap.style.width = "100%";
+        }
+
+        if (currentDisplayStationCanvas === "canvas") {
+            this.divStation.style.display = "block";
+            this.divReservationCanvas.style.display = "none";
+            currentDisplayStationCanvas = "station";
+        }
+    }
+
+    showCurrentReservation() {
+        let setTime = sessionStorage.getItem("setTime");
+        let sessionIdentityStr = sessionStorage.getItem("identity");
+        let sessionIdentityObj = JSON.parse(sessionIdentityStr);
+        let remainingTime = Math.round(CONFIG.reservationTime - (Date.now() / 1000 - setTime / 1000));
+
+        if (remainingTime > 0) {
+            let stationName = sessionStorage.getItem("station");
+            booking = new Booking(stationName, sessionIdentityObj.name, sessionIdentityObj.surname, setTime, CONFIG.reservationTime);
+            booking.setBooking();
+            booking.showReservationInfos();
+            booking.timer();
+
+        } else {
+            sessionStorage.clear();
+        }
+    }
 }
