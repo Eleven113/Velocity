@@ -1,6 +1,8 @@
 class Canvas {
     constructor(div, context) {
         this.div = div;
+        this.div.width = 375;
+        this.div.height = 375;
         this.context = context;
         this.ctx = this.div.getContext(this.context);
         this.canvasCoord = this.div.getBoundingClientRect();
@@ -8,7 +10,7 @@ class Canvas {
         this.cursorPosY;
         this.isDrawing = false;
         this.firstDraw = true;
-        this.draw();
+        
 
         this.reservationButton = document.getElementById("reservation_button");
         this.validButton = document.getElementById("valid_button")
@@ -24,20 +26,17 @@ class Canvas {
 
         //le canvas apparait lorsqu'on clique sur réserver
         this.reservationButton.addEventListener("click", this.showCanvas.bind(this));
+      
+        // event
+        this.events();
 
-        //Réservation
-        this.validButton.addEventListener("click", this.booking.bind(this));
+        this.initCanvas();
 
-        this.clearButton.addEventListener("click", this.clearDraw.bind(this));
-
-        this.div.addEventListener("mouseup", this.stopDraw.bind(this));
-
-        this.div.addEventListener("mouseleave", this.stopDraw.bind(this));
     }
 
     // Créé le fond du canvas
     initCanvas() {
-        this.ctx.font = "25px Serif";
+        this.ctx.font = "23px Serif";
         this.ctx.fillStyle = "#4f77f0";
         this.ctx.fillText("Signez puis valider votre réservation", 15, 200);
     }
@@ -97,8 +96,16 @@ class Canvas {
         this.div.onmousemove = this.onMouseMove.bind(this);
     }
 
-    draw() {
+    events() {
         this.div.addEventListener("mousedown", this.onMouseDown.bind(this));
+
+        this.validButton.addEventListener("click", this.booking.bind(this));
+
+        this.clearButton.addEventListener("click", this.clearDraw.bind(this));
+
+        this.div.addEventListener("mouseup", this.stopDraw.bind(this));
+
+        this.div.addEventListener("mouseleave", this.stopDraw.bind(this));
 
     }
 
@@ -146,7 +153,3 @@ class Canvas {
 
 
 
-// Ajouter à la CONFIG
-let canvas = new Canvas(document.getElementById(CONFIG.canvas.div), CONFIG.canvas.context);
-canvas.initCanvas();
-canvas.draw();

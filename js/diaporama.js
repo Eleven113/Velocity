@@ -8,7 +8,7 @@ class Diaporama {
         this.timer;
         this.sliderBtnPause = document.getElementById(this.sliderIds.btnPause);
 
-        this.addEvent();
+        this.events();
 
     }
 
@@ -67,7 +67,7 @@ class Diaporama {
         this.start();
     }
 
-    addEvent() {
+    events() {
         document.getElementById(this.sliderIds.btnLeft).addEventListener("click", this.eventLeftBtn.bind(this));
 
         document.getElementById(this.sliderIds.btnRight).addEventListener("click", this.eventRightBtn.bind(this));
@@ -119,7 +119,3 @@ class Diaporama {
 
 }
 
-diaporama = new Diaporama(CONFIG.slider.slides, CONFIG.slider.timing, CONFIG.slider.divIds);
-
-diaporama.createSlide();
-diaporama.start();
