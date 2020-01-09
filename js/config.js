@@ -9,7 +9,7 @@ const CONFIG = {
             lng: 2.299
         },
         div: document.getElementById("map"),
-        zoom: 13
+        zoom: 13,
     },
 
     slider : {
@@ -51,6 +51,13 @@ const CONFIG = {
     canvas: {
         div: "canvas",
         context: "2d"
-    }
+    },
 
+    display: {
+        mapstation : "mapstation",
+        slider : "slider",
+        menuReservation : "menu_reservation",
+        menuAide : "menu_aide"
+    
+    }
 }

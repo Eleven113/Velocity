@@ -3,9 +3,9 @@ class Canvas {
         this.div = div;
         this.context = context;
         this.ctx = this.div.getContext(this.context);
-        this.canvasCoord = this.div.getBoundingClientRect()
-        this.posCursorX;
-        this.posCursorY;
+        this.canvasCoord = this.div.getBoundingClientRect();
+        this.cursorPosX;
+        this.cursorPosY;
         this.isDrawing = false;
         this.firstDraw = true;
         this.draw();
@@ -53,9 +53,14 @@ class Canvas {
         }
     }
 
+    cursorPosition(e) {
+        this.canvasCoord = this.div.getBoundingClientRect();
+        this.cursorPosX = e.clientX - this.canvasCoord.left;
+        this.cursorPosY = e.clientY - this.canvasCoord.top;
+    }
+
     // Arrete le dessin
     stopDraw() {
-        console.log(this);
         this.div.onmousemove = null;
         this.isDrawing = false;
     }
@@ -65,35 +70,35 @@ class Canvas {
         this.ctx.clearRect(0, 0, this.div.width, this.div.height);
     }
 
-    draw() {
-        this.div.addEventListener("mousedown", function () {
-            this.div.onmousemove = function (e) {
-                this.posCursorX = e.clientX - this.canvasCoord.left;
-                this.posCursorY = e.clientY - this.canvasCoord.top;
+    onMouseMove(e) {
+        this.cursorPosition(e);
 
-                // le 1er dessin efface le texte
-                if (this.firstDraw) {
-                    this.clearDraw();
-                    this.firstDraw = false;
-                }
-                // Au 1er clic, on commence le dessin et positionne le curseur
-                if (!this.isDrawing) {
-                    console.log(this.ctx);
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(this.posCursorX, this.posCursorY);
-                    console.log(this.posCursorX, this.posCursorY);
-                    this.isDrawing = true;
-                }
-                // Ensuite on dessine 
-                else {
-                    console.log(this.posCursorX, this.posCursorY);
-                    this.ctx.lineTo(this.posCursorX, this.posCursorY);
-                    this.ctx.strokeStyle = "#4f77f0";
-                    this.ctx.lineWidth = 5;
-                    this.ctx.stroke();
-                }
-            }.bind(this);
-        }.bind(this));
+        // le 1er dessin efface le texte
+        if (this.firstDraw) {
+            this.clearDraw();
+            this.firstDraw = false;
+        }
+        // Au 1er clic, on commence le dessin et positionne le curseur
+        if (!this.isDrawing) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.cursorPosX, this.cursorPosY);
+            this.isDrawing = true;
+        }
+        // Ensuite on dessine 
+        else {
+            this.ctx.lineTo(this.cursorPosX, this.cursorPosY);
+            this.ctx.strokeStyle = "#4f77f0";
+            this.ctx.lineWidth = 5;
+            this.ctx.stroke();
+        }
+    }
+
+    onMouseDown(){
+        this.div.onmousemove = this.onMouseMove.bind(this);
+    }
+
+    draw() {
+        this.div.addEventListener("mousedown", this.onMouseDown.bind(this));
 
     }
 
@@ -103,13 +108,13 @@ class Canvas {
         let nameValue = this.divName.value;
         let setTime = Date.now();
 
-        booking = new Booking(stationName, nameValue, surnameValue, setTime, CONFIG.reservationTime);
+        let booking = new Booking(stationName, nameValue, surnameValue, setTime, CONFIG.reservationTime);
 
         // Enregistrement des données
         booking.setBooking();
 
         // Réinitialisation de la précédente réservation
-        clearInterval(timerSet);
+        clearInterval(countdown);
         this.reservationInfos.innerHTML = '';
         this.reservationInfos.style.display = "none";
 
@@ -145,5 +150,3 @@ class Canvas {
 let canvas = new Canvas(document.getElementById(CONFIG.canvas.div), CONFIG.canvas.context);
 canvas.initCanvas();
 canvas.draw();
-
-
