@@ -1,8 +1,8 @@
 let currentDisplayStationCanvas;
 let countdown;
 let booking;
+
 let displayMenu = new DisplayMenu(CONFIG.display.mapstation,CONFIG.display.slider,CONFIG.display.menuReservation,CONFIG.display.menuAide);
-console.log(displayMenu);
 
 function initMap() {
 
