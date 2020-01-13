@@ -112,14 +112,17 @@ class Canvas {
 
     events() {
         this.div.addEventListener("mousedown", this.onMouseDown.bind(this));
+        this.div.addEventListener("touchmove", this.onMouseDown.bind(this));
 
         this.validButton.addEventListener("click", this.booking.bind(this));
 
         this.clearButton.addEventListener("click", this.clearDraw.bind(this));
 
         this.div.addEventListener("mouseup", this.stopDraw.bind(this));
+        this.div.addEventListener("touchend", this.stopDraw.bind(this));
 
         this.div.addEventListener("mouseleave", this.stopDraw.bind(this));
+        this.div.addEventListener("touchleave", this.stopDraw.bind(this));
 
     }
 
