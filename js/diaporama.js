@@ -10,7 +10,6 @@ class Diaporama {
         this.sliderBtnPause = document.getElementById(this.sliderIds.btnPause);
         this.sliderBtnClose = document.getElementById(this.sliderIds.btnClose);
         this.menuAide = document.getElementById("menu_aide");
-        console.log(this.menuAide);
 
         this.events();
 

@@ -1,8 +1,14 @@
 class Canvas {
     constructor(div, context) {
         this.div = div;
-        this.div.width = 375;
-        this.div.height = 375;
+        if (screen.width > 414) {
+            this.div.width = 375;
+            this.div.height = 375;
+        }
+         else {
+            this.div.width = 225;
+            this.div.height = 300;
+        }
         this.context = context;
         this.ctx = this.div.getContext(this.context);
         this.canvasCoord = this.div.getBoundingClientRect();
@@ -36,9 +42,17 @@ class Canvas {
 
     // Créé le fond du canvas
     initCanvas() {
-        this.ctx.font = "23px Serif";
-        this.ctx.fillStyle = "#4f77f0";
-        this.ctx.fillText("Signez puis valider votre réservation", 15, 200);
+        if (screen.width > 414) {
+            this.ctx.font = "23px Serif";
+            this.ctx.fillStyle = "#4f77f0";
+            this.ctx.fillText("Signez puis valider votre réservation", 15, 200);
+        }
+         else {
+            this.ctx.font = "13px Serif";
+            this.ctx.fillStyle = "#4f77f0";
+            this.ctx.fillText("Signez puis valider votre réservation", 12, 150);
+        }
+
     }
 
     showCanvas() {
@@ -137,9 +151,10 @@ class Canvas {
 
         if (screen.width > 414) {
             this.divMap.style.width = "100%";
-        } else {
-            this.divMapstation.style.flexDirection = "column";
         }
+        //  else {
+        //     this.divMapstation.style.flexDirection = "column";
+        // }
 
         //Réinitialisation Canvas
         this.firstDraw = true;

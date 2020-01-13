@@ -27,7 +27,7 @@ class Booking {
 
     showReservationInfos() {
         this.reservationInfos.style.display = "flex";
-        this.reservationInfos.innerHTML = '<div>Vélo reservé à la station <span class="reservation_data">' + this.stationName + '</span> par <span class="reservation_data">' + this.name + ' ' + this.surname + '</span></div><br><div>Temps restant : <span id="timer" class="reservation_data"></span></div>';
+        this.reservationInfos.innerHTML = '<div id="reservation">Vélo reservé à la station <span class="reservation_data">' + this.stationName + '</span> par <span class="reservation_data">' + this.name + ' ' + this.surname + '</span></div><br><div>Temps restant : <span id="timer" class="reservation_data"></span></div>';
     }
 
     showRemainingTime() {

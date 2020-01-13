@@ -51,6 +51,7 @@ header {
 
 #slider_btn{
     font-size: 7vw;
+    margin-top: 10px;
 }
 
 #map {
@@ -67,3 +68,4 @@ header {
 #reservation_canvas {
     margin-top: 30px;
 }
+
