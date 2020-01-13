@@ -267,7 +267,7 @@ i:hover {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    font-size: 2em;
+    font-size: 2vw;
 }
 
 #slider_img {
