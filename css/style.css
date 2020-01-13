@@ -37,13 +37,25 @@ header {
     justify-content: space-between;
 }
 
-#menu_reservation {
+/* #menu_reservation {
     display : none;
+} */
+
+#menu_reservation,
+#menu_aide {
+    width: 150px;
+    font-size: 1.5vw;
+    text-align: center;
 }
 
-#menu_reservation, #menu_aide{
-    width: 150px;
-    font-size : 2vw;
+#slider_close {
+    padding-right: 3%;
+    padding-top: 2%;
+    text-align: right;
+    cursor: pointer;
+    color:#e31b1b;
+    font-size: 2vw;
+
 }
 
 header {
@@ -69,7 +81,7 @@ a:hover {
 
 #slider {
     background-color: rgba(227, 27, 27, 0.1);
-    display: none;
+    /* display: none; */
 }
 
 #cathedrale {
@@ -265,7 +277,7 @@ i:hover {
     flex-direction: row;
     justify-content: center;
     border-radius: 15px;
-    background-color: rgba(229,216,14,0.5);
+    background-color: rgba(229, 216, 14, 0.5);
 }
 
 #slider_img-img {
@@ -282,7 +294,7 @@ i:hover {
     background-color: rgba(80, 201, 28, 0.3);
 }
 
-nav:hover{
+nav:hover {
     cursor: pointer;
 }
 

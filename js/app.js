@@ -2,7 +2,7 @@ let currentDisplayStationCanvas;
 let countdown;
 let booking;
 
-let displayMenu = new DisplayMenu(CONFIG.display.mapstation, CONFIG.display.slider, CONFIG.display.menuReservation, CONFIG.display.menuAide);
+// let displayMenu = new DisplayMenu(CONFIG.display.mapstation, CONFIG.display.slider, CONFIG.display.menuReservation, CONFIG.display.menuAide);
 
 let diaporama = new Diaporama(CONFIG.slider.slides, CONFIG.slider.timing, CONFIG.slider.divIds);
 

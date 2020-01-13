@@ -6,7 +6,11 @@ class Diaporama {
         this.isRunning = true;
         this.currentPosition = 0;
         this.timer;
+        this.slider = document.getElementById(this.sliderIds.slider);
         this.sliderBtnPause = document.getElementById(this.sliderIds.btnPause);
+        this.sliderBtnClose = document.getElementById(this.sliderIds.btnClose);
+        this.menuAide = document.getElementById("menu_aide");
+        console.log(this.menuAide);
 
         this.events();
 
@@ -76,6 +80,10 @@ class Diaporama {
 
 
         this.sliderBtnPause.addEventListener("click", this.pauseAndPlay.bind(this));
+
+        this.sliderBtnClose.addEventListener("click", this.closeDiaporama.bind(this));
+
+        this.menuAide.addEventListener("click", this.showDiaporama.bind(this));
     }
 
     pauseAndPlay() {
@@ -115,6 +123,14 @@ class Diaporama {
             this.prevSlide();
             this.runDiapo();
         }
+    }
+
+    closeDiaporama() {
+        this.slider.style.display = "none";
+    }
+
+    showDiaporama() {
+        this.slider.style.display = "block";
     }
 
 }

@@ -37,11 +37,13 @@ const CONFIG = {
             }
         ],
         divIds: {
+            slider : "slider",
             img: "slider_img",
             txt: "slider_txt",
             btnLeft: "slider_btn-left",
             btnRight: "slider_btn-right",
-            btnPause: "slider_btn-pause"
+            btnPause: "slider_btn-pause",
+            btnClose: "slider_close"
         }
 
     },
