@@ -10,7 +10,7 @@ class Canvas {
         this.cursorPosY;
         this.isDrawing = false;
         this.firstDraw = true;
-        
+
 
         this.reservationButton = document.getElementById("reservation_button");
         this.validButton = document.getElementById("valid_button")
@@ -26,7 +26,7 @@ class Canvas {
 
         //le canvas apparait lorsqu'on clique sur réserver
         this.reservationButton.addEventListener("click", this.showCanvas.bind(this));
-      
+
         // event
         this.events();
 
@@ -92,7 +92,7 @@ class Canvas {
         }
     }
 
-    onMouseDown(){
+    onMouseDown() {
         this.div.onmousemove = this.onMouseMove.bind(this);
     }
 
@@ -150,6 +150,3 @@ class Canvas {
 
     }
 }
-
-
-

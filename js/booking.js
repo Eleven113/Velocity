@@ -32,7 +32,7 @@ class Booking {
 
     showRemainingTime() {
         let currentTime = Date.now();
-        let remainingTime = Math.round(this.duration - (currentTime/1000 - this.setTime/1000));
+        let remainingTime = Math.round(this.duration - (currentTime / 1000 - this.setTime / 1000));
         let divTimer = document.getElementById("timer");
         if (remainingTime > 0) {
             let minutes, secondes;
@@ -53,8 +53,7 @@ class Booking {
 
     timer() {
         this.showRemainingTime();
-        this.countdown = setInterval(this.showRemainingTime.bind(this)
-        , 1000);
+        this.countdown = setInterval(this.showRemainingTime.bind(this), 1000);
     }
 
 }
