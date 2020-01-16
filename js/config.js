@@ -48,7 +48,7 @@ const CONFIG = {
 
     },
 
-    reservationTime: 30,
+    reservationTime: 1200,
 
     canvas: {
         div: "canvas",

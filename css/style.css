@@ -54,7 +54,7 @@ header {
     text-align: right;
     cursor: pointer;
     color:#e31b1b;
-    font-size: 2vw;
+    font-size: 1.7vw;
 
 }
 
@@ -255,7 +255,7 @@ i:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    font-size: 2em;
+    font-size: 1.8vw;
     margin-bottom: 2%;
     color: #4f77f0;
 }
