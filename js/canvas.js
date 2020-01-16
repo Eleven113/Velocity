@@ -119,7 +119,7 @@ class Canvas {
 
         this.div.addEventListener("mouseup", this.stopDraw.bind(this));
 
-        this.div.addEventListener("mouseleave", this.stopDraw.bind(this));s
+        this.div.addEventListener("mouseleave", this.stopDraw.bind(this));
 
     }
 
