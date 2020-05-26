@@ -27,7 +27,7 @@ class MapManager {
     createMap() {
 
         // Appel à l'API Station, Construction et logique lié à la carte
-        ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=Amiens&apiKey=81391ed9adfd937442c39a2490a0afa6d51d29e9", function (reponse) {
+        ajaxGet("https://api.jcdecaux.com/vls/v1/stations?contract=Amiens&apiKey=GoogleApiKey", function (reponse) {
             // Récupération de la liste des stations
             this.listeStations = JSON.parse(reponse);
 
